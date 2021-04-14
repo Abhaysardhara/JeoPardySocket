@@ -9,7 +9,7 @@ const {userJoin, userLeave, getRoomUsers, updateRoomUsersPoint, substractRoomUse
 
 http.listen(port, () => console.log(`server listening on port: ${port}`))
 
-var x=1, y=3, z=4;
+var x=0, y=0, z=0;
 var trackWrong = [];
 var questions = require('./game/jeopardy_questions.json');
 var boards = questions["boards"];
