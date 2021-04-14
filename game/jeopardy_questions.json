@@ -1,0 +1,247 @@
+{
+	"title": "Abhay Sardhara",
+	"language": "EN",
+	"author": "Abhay Sardhara",
+	"notes": "Dieser Datensatz enthält Antworten und zugehörige Fragen über die Geschehnisse im Jahr 2016.",
+	"game": "Jeopardy",
+	"boards": [
+		{
+			"notes": "Board 1",
+			"categories": {
+				"Erdowahn": [
+					{
+						"question": "Dieser Comedian und Satiriker löste im Frühjahr 2016 mit einem Gedicht über den Türkischen Präsidenten Recep Tayyip Erdogan eine Staatsaffäre aus.",
+						"answer": "Wer ist (Jan) Böhmermann",
+						"point": 200
+					},
+					{
+						"question": "In diesem Monat fand der misslungene Militärputsch auf die türkische Regierung statt",
+						"answer": "Was ist (der Monat) Juli",
+						"point": 400
+					},
+					{
+						"question": "Die Beziehungen zu diesem anderen Land verbesserte Erdogan durch eine einfache Entschulding dramatisch",
+						"answer": "Was ist (das Land) Russland",
+						"point": 600
+					},
+					{
+						"question": "Das plant die türkische Regierung im Frühjahr 2017, um die Macht von Präsident Erdogan weiter auszubauen",
+						"answer": "Was ist (das/ein) Verfassungsreferendum",
+						"point": 800
+					},
+					{
+						"question": "Diese Meldung machte Ende Oktober die Runde",
+						"answer": "Was ist die Wiedereinführung der Todesstrafe (in der Türkei)",
+						"point": 1000
+					}
+				],
+				"Terror": [
+					{
+						"question": "An diesem Ort in Deutschland ereignete sich der tragische Terroranschlag, bei dem im Dezember 12 Menschen durch einen Lastwagen ermordet wurden",
+						"answer": "Was ist der (Weihnachtsmarkt am) Breitscheidplatz (in Berlin)",
+						"point": 200
+					},
+					{
+						"question": "An diesem Flughafen detonierten im März mehrere Bomben",
+						"answer": "Was ist der Flughafen Brüssel",
+						"point": 400
+					},
+					{
+						"question": "Im Juli diesen Jahres fand hier ein tragischer Terroranschlag statt, bei dem mindestens 86 Menschen um ihr Leben kamen",
+						"answer": "Was ist (der Terroranschlag in) Nizza",
+						"point": 600
+					},
+					{
+						"question": "In dieser Stadt wurden bei einem Terroranschlag Ende Januar 11 Deutsche ermordet",
+						"answer": "Was ist (die Stadt) Istanbul (in der Türkei)",
+						"point": 800
+					},
+					{
+						"question": "An diesem Ort in Istanbul starben Ende Juni 45 Menschen. Es gab 235 Verletzte.",
+						"answer": "Was ist der Flughafen (in Istanbul)",
+						"point": 1000
+					}
+				],
+				"Firmen": [
+					{
+						"question": "Die Firma DeepMind sorgte dieses Jahr für Aufsehen, weil ihre Künstliche Intelligenz AlphaGo in diesem Spiel erstmals einen Menschen besiegte",
+						"answer": "Was ist (das Spiel) Go",
+						"point": 200
+					},
+					{
+						"question": "Diese Firma brachte 2016 einen Fußballverein in die 1. Bundesliga",
+						"answer": "Was ist RedBull",
+						"point": 400
+					},
+					{
+						"question": "Diese Firma musste europaweit Anfang des Jahres einige ihrer Produkte zurückrufen, weil ein Konsument Spuren von Plastikteilen in der Schokolade entdeckte",
+						"answer": "Was ist Mars",
+						"point": 600
+					},
+					{
+						"question": "Diese Firma ist für das mobile Betriebssystem Android verantwortlich und überraschte dieses Jahr erstmals mit einem eigenen, selbst hergestelltem Smartphone",
+						"answer": "Was ist (das) Google (Pixel)",
+						"point": 800
+					},
+					{
+						"question": "Samsung machte dieses Jahr Schlagzeilen mit diesem Mobiltelefon, das es wegen Explosionsgefahr weltweit zurückrufen musste",
+						"answer": "Was ist das (Samsung) Galaxy Note (7)",
+						"point": 1000
+					}
+				],
+				"Ereignisse": [
+					{	
+						"question": "Dann und hier kam es zu zahlreichen sexuellen Übergriffen auf Frauen durch Nordafrikaner",
+						"answer": "Was ist die Silvesternacht in Köln",
+						"point": 200
+					},
+					{
+						"question": "Am ersten Februar rief die WHO aufgrund dieses Viruses den \"Öffentlichen Gesundheitsnotstand internationalen Ausmaßes\" aus",
+						"answer": "Was ist der Zika-Virus",
+						"point": 400
+					},
+					{
+						"question": "Ende Oktober erschütterte ein starkes Erdbeben dieses Land",
+						"answer": "Was ist Italien",
+						"point": 600
+					},
+					{
+						"question": "Der Hersteller Monsanto, der diesen vermeintlich krebserregenden Wirkstoff in seinen Produkten einsetzt, wurde von Bayer für rund 66 Millionen Euro gekauft",
+						"answer": "Was ist Glyphosat",
+						"point": 800
+					},
+					{
+						"question": "In Lohne bei Vechta in Niedersachsen löste ein technischer Defekt am Ostermontag einen Großbrand in einer Schlachterei aus",
+						"answer": "Was ist Wiesenhof",
+						"point": 1000
+					}
+				]
+			}
+		},
+		{
+			"notes": "Board 2",
+			"categories": {
+				"Politik": [
+					{
+						"question": "Das Referendum im Juni zu diesem Ereignis ging nur knapp mit einer Mehrheit für \"Nein\" aus",
+						"answer": "Was ist der Brexit",
+						"point": 200
+					},
+					{
+						"question": "Dieser Mann aus der Demokratischen Partei trat bei der Präsidentschaftswahl in den Vereinigten Staaten gegen Hillary Clinton an",
+						"answer": "Wer ist Bernie Sanders",
+						"point": 400
+					},
+					{
+						"question": "Die Bundestagsabgeordnete Petra Hinz der SPD legte ihr Amt nieder",
+						"answer": "Was ist ein gefälschter Lebenslauf",
+						"point": 600
+					},
+					{
+						"question": "Diese Partei scheiterte bei der Landtagswahl 2016 in Rheinland-Pfalz mit 2,8% an der Fünf-Prozent-Hürde",
+						"answer": "Was ist DIE LINKE",
+						"point": 800
+					},
+					{
+						"question": "Dieser Mann gewann die Wiederholung der Wiederholung der Bundespräsidentschaftswahl in Österreich",
+						"answer": "Wer ist Alexander van der Bellen",
+						"point": 1000
+					}
+				],
+				"Filme": [
+					{
+						"question": "Der Nachfolger dieses beliebten Animationsfilmes aus dem Jahre 2003 erschien 2016 in den Kinos",
+						"answer": "Was ist FINDET DORY",
+						"point": 200
+					},
+					{
+						"question": "Zu diesem Franchise gehört der am Ende des Jahres erschienene Film \"Rogue One\"",
+						"answer": "Was ist Star Wars",
+						"point": 400
+					},
+					{
+						"question": "Dieser Film ist der erste Animationsfilm der Welt, der eine FSK-Bewertung \"ab 16\" erhielt",
+						"answer": "Was ist Sausage Party",
+						"point": 600
+					},
+					{
+						"question": "Dieser Film trägt den Titel eines beliebten Computerspiels",
+						"answer": "Was ist Assassin's Creed",
+						"point": 800
+					},
+					{
+						"question": "Dieser Film enthält satirische Elemente und basiert auf einer Comic-Serie von Marvel. Es handelt sich um den achten Teil der X-Men-Filmreihe.",
+						"answer": "Was ist Deadpool",
+						"point": 1000
+					}
+				],
+				"Sport": [
+					{
+						"question": "Viele Sportler dieses Landes sind nachweislich in ein staatlich finanziertes Doping-Programm verwickelt",
+						"answer": "Was ist Russland",
+						"point": 200
+					},
+					{
+						"question": "Aufgrund der Doping-Vorfälle in Russland verlor das Land kürzlich den Weltcup dieser Skisportart",
+						"answer": "Was ist Biathlon",
+						"point": 400
+					},
+					{
+						"question": "In dieser Sportart stellte Lasha Talachadse aus Georgien im Rahmen der olympischen Spiele 2016 in Brasilien einen neuen Weltrekord von 473 kg im Zweikampf auf",
+						"answer": "Was ist Gewichtheben (über 105 kg)",
+						"point": 600
+					},
+					{
+						"question": "Bei diesem Großereignis überraschte die Mannschaft von Heimir Hallgrímsson alle Zuschauer",
+						"answer": "Was ist die Fußball-Europameisterschaft 2016",
+						"point": 800
+					},
+					{
+						"question": "Diese Veranstaltung richtete die FIFA dieses Jahr in Kolumbien aus",
+						"answer": "Was ist die (FIFA) Futsal-WM 2016",
+						"point": 1000
+					}
+				],
+				"News": [
+					{
+						"question": "Diese Dokumente belegen, dass zahlreiche Prominente Briefkastenfirmen in Panama betrieben haben, um Steuern einzusparen",
+						"answer": "Was sind die Panama Papers",
+						"point": 200
+					},
+					{
+						"question": "Die Bundesregierung führte eine Prämie für den Kauf eines solchen Fahrzeugs in Höhe von 4000 Euro ein",
+						"answer": "Was sind Elektroautos",
+						"point": 400
+					},
+					{
+						"question": "Er sank in diesem Jahr auf ein Rekordtief. Viele Landwirte kämpfen um ihre Existenz.",
+						"answer": "Was ist der (niedrige) Milchpreis",
+						"point": 600
+					},
+					{
+						"question": "Seit Mai 2016 sind diese Bilder auf bestimmten Verpackungen pflicht",
+						"answer": "Was sind Schockbilder (auf Zigarettenschachteln)",
+						"point": 800
+					},
+					{
+						"question": "Am 27. November wird dieser Mann in seinem Motorsport der neue Weltmeister",
+						"answer": "Wer ist Nico Rosberg",
+						"point": 1000
+					}
+				]
+			}
+		},
+		{
+			"notes": "Final Jeopardy",
+			"categories": {
+				"Bye Bye": [
+					{
+						"question": "Dieser Musiker kündigte an, ab Ende 2016 nicht mehr live auf der Bühne aufzutreten",
+						"answer": "Wer ist Avicii",
+						"point": 1000
+					}
+				]
+			}
+		}
+	]
+}
