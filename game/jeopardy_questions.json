@@ -2,67 +2,67 @@
 	"title": "Abhay Sardhara",
 	"language": "EN",
 	"author": "Abhay Sardhara",
-	"notes": "Dieser Datensatz enthält Antworten und zugehörige Fragen über die Geschehnisse im Jahr 2016.",
+	"notes": "Kem Chho Majama?",
 	"game": "Jeopardy",
 	"boards": [
 		{
 			"notes": "Board 1",
 			"categories": {
-				"Erdowahn": [
+				"Technology": [
 					{
-						"question": "Dieser Comedian und Satiriker löste im Frühjahr 2016 mit einem Gedicht über den Türkischen Präsidenten Recep Tayyip Erdogan eine Staatsaffäre aus.",
-						"answer": "Wer ist (Jan) Böhmermann",
+						"question": "On Oct. 15, 2003 it became the third country to launch a man into space; the Shenzhou 5 spacecraft orbited the Earth 14 times",
+						"answer": "China",
 						"point": 200
 					},
 					{
-						"question": "In diesem Monat fand der misslungene Militärputsch auf die türkische Regierung statt",
-						"answer": "Was ist (der Monat) Juli",
+						"question": "(Cheryl of the Clue Crew at the Eli Whitney Museum in New Haven, Connecticut) In the 1940s, Dr. William Sewell created an artificial one of these, using parts from an erector set",
+						"answer": "an artificial heart",
 						"point": 400
 					},
 					{
-						"question": "Die Beziehungen zu diesem anderen Land verbesserte Erdogan durch eine einfache Entschulding dramatisch",
-						"answer": "Was ist (das Land) Russland",
+						"question": "Hans Lippershey, who invented this instrument in 1608, called it a \"looker\"",
+						"answer": "Telescope",
 						"point": 600
 					},
 					{
-						"question": "Das plant die türkische Regierung im Frühjahr 2017, um die Macht von Präsident Erdogan weiter auszubauen",
-						"answer": "Was ist (das/ein) Verfassungsreferendum",
+						"question": "HDTV, which uses more lines to give clearer pictures, stands for this",
+						"answer": "High Definition Television",
 						"point": 800
 					},
 					{
-						"question": "Diese Meldung machte Ende Oktober die Runde",
-						"answer": "Was ist die Wiedereinführung der Todesstrafe (in der Türkei)",
+						"question": "GOES, INSAT & METEOSAT are satellites used for this purpose",
+						"answer": "Weather Forecasting",
 						"point": 1000
 					}
 				],
-				"Terror": [
+				"Sports": [
 					{
-						"question": "An diesem Ort in Deutschland ereignete sich der tragische Terroranschlag, bei dem im Dezember 12 Menschen durch einen Lastwagen ermordet wurden",
-						"answer": "Was ist der (Weihnachtsmarkt am) Breitscheidplatz (in Berlin)",
+						"question": "It\'s the sport played professionally by Andre Agassi",
+						"answer": "tennis",
 						"point": 200
 					},
 					{
-						"question": "An diesem Flughafen detonierten im März mehrere Bomben",
-						"answer": "Was ist der Flughafen Brüssel",
+						"question": "In this game, an entry sport to baseball, the batter hits the ball that rests atop a tube",
+						"answer": "T-ball",
 						"point": 400
 					},
 					{
-						"question": "Im Juli diesen Jahres fand hier ein tragischer Terroranschlag statt, bei dem mindestens 86 Menschen um ihr Leben kamen",
-						"answer": "Was ist (der Terroranschlag in) Nizza",
+						"question": "What the Europeans call association football, we call this",
+						"answer": "soccer",
 						"point": 600
 					},
 					{
-						"question": "In dieser Stadt wurden bei einem Terroranschlag Ende Januar 11 Deutsche ermordet",
-						"answer": "Was ist (die Stadt) Istanbul (in der Türkei)",
+						"question": "Brothers Phil & Tony Esposito were both named to the hall of fame for this sport",
+						"answer": "Hockey",
 						"point": 800
 					},
 					{
-						"question": "An diesem Ort in Istanbul starben Ende Juni 45 Menschen. Es gab 235 Verletzte.",
-						"answer": "Was ist der Flughafen (in Istanbul)",
+						"question": "Fielding positions in this British game include wicketkeeper, square leg & gully",
+						"answer": "Cricket",
 						"point": 1000
 					}
 				],
-				"Firmen": [
+				"Film": [
 					{
 						"question": "Die Firma DeepMind sorgte dieses Jahr für Aufsehen, weil ihre Künstliche Intelligenz AlphaGo in diesem Spiel erstmals einen Menschen besiegte",
 						"answer": "Was ist (das Spiel) Go",
@@ -89,7 +89,7 @@
 						"point": 1000
 					}
 				],
-				"Ereignisse": [
+				"Editorial": [
 					{	
 						"question": "Dann und hier kam es zu zahlreichen sexuellen Übergriffen auf Frauen durch Nordafrikaner",
 						"answer": "Was ist die Silvesternacht in Köln",
@@ -121,10 +121,10 @@
 		{
 			"notes": "Board 2",
 			"categories": {
-				"Politik": [
+				"Technology": [
 					{
-						"question": "Das Referendum im Juni zu diesem Ereignis ging nur knapp mit einer Mehrheit für \"Nein\" aus",
-						"answer": "Was ist der Brexit",
+						"question": "Automaton is sometimes just a fancy name for one of these mechanical beings",
+						"answer": "a robot",
 						"point": 200
 					},
 					{
@@ -148,7 +148,7 @@
 						"point": 1000
 					}
 				],
-				"Filme": [
+				"Sports": [
 					{
 						"question": "Der Nachfolger dieses beliebten Animationsfilmes aus dem Jahre 2003 erschien 2016 in den Kinos",
 						"answer": "Was ist FINDET DORY",
@@ -175,7 +175,7 @@
 						"point": 1000
 					}
 				],
-				"Sport": [
+				"Film": [
 					{
 						"question": "Viele Sportler dieses Landes sind nachweislich in ein staatlich finanziertes Doping-Programm verwickelt",
 						"answer": "Was ist Russland",
@@ -202,7 +202,7 @@
 						"point": 1000
 					}
 				],
-				"News": [
+				"Editorial": [
 					{
 						"question": "Diese Dokumente belegen, dass zahlreiche Prominente Briefkastenfirmen in Panama betrieben haben, um Steuern einzusparen",
 						"answer": "Was sind die Panama Papers",
@@ -234,7 +234,7 @@
 		{
 			"notes": "Final Jeopardy",
 			"categories": {
-				"Bye Bye": [
+				"Technology": [
 					{
 						"question": "Dieser Musiker kündigte an, ab Ende 2016 nicht mehr live auf der Bühne aufzutreten",
 						"answer": "Wer ist Avicii",
