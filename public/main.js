@@ -138,14 +138,19 @@ resetGame.addEventListener('click', () => {
 // Check user's answer (If similarity is greater or equal to 75% then answer is right, otherwise wrong)
 checkAns.addEventListener('click', ()=> {
     let text = document.getElementById('msg').value;
-    let z = similarity(text, answer) * 100.0;
-    if(z >= 85) {
-        socket.emit('addPoint', {username, point, room});
+    if(text.length > 0) {
+        let z = similarity(text, answer) * 100.0;
+        if(z >= 85) {
+            socket.emit('addPoint', {username, point, room});
+        }
+        else {
+            socket.emit('substractPoint', {username, point, room});
+            document.getElementById("answer").style.display = "none";
+            document.getElementById('seeAns').style.display = "block";
+        }
     }
     else {
-        socket.emit('substractPoint', {username, point, room});
-        document.getElementById("answer").style.display = "none";
-        document.getElementById('seeAns').style.display = "block";
+        alert('Please enter answer!!!');
     }
 })
 
