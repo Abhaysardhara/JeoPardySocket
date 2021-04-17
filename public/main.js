@@ -135,7 +135,7 @@ resetGame.addEventListener('click', () => {
     setTimeout(reloadPage, 2000);
 })
 
-// Check user's answer (If similarity is greater or equal to 75% then answer is right, otherwise wrong)
+// Check user's answer (If similarity is greater or equal to 85% then answer is right, otherwise wrong)
 checkAns.addEventListener('click', ()=> {
     let text = document.getElementById('msg').value;
     if(text.length > 0) {
