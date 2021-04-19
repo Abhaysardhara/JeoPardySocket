@@ -240,6 +240,7 @@ socket.on('userLeft', (data) => {
 // Track available users
 socket.on('roomUsers', (data) => {
     outputUsers(data.roomUsers);
+    document.getElementById('numUser').innerText = data.roomUsers.length;
 })
 
 // Handle Socket Reconnection
