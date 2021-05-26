@@ -5,8 +5,17 @@ const port = process.env.PORT || 3000
 const app = express();
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
+var bodyParser = require('body-parser')
 const formatMessage = require('./utils/message');
-const {userJoin, userLeave, getRoomUsers, updateRoomUsersPoint, substractRoomUsersPoint, userLen, getWinner, resetUsers} = require('./utils/users');
+const { userJoin, 
+        userLeave, 
+        getRoomUsers, 
+        updateRoomUsersPoint, 
+        substractRoomUsersPoint, 
+        userLen, 
+        getWinner, 
+        resetUsers
+    } = require('./utils/users');
 
 // Server Listener
 http.listen(port, () => console.log(`server listening on port: ${port}`))
@@ -15,11 +24,12 @@ http.listen(port, () => console.log(`server listening on port: ${port}`))
 var trackRoom = {};
 var questions = require('./game/jeopardy_questions.json');
 var boards = questions["boards"];
-var dailyDoubles = [];
-var isDailyDouble = false;
 
 // Express static pages
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ type: 'application/*+json' }));
 
 // Pick Random Questions for daily doubles
 function pickRandomQuestion() {
@@ -30,9 +40,11 @@ function pickRandomQuestion() {
     // console.log(boards[board].categories[Object.keys(boards[board].categories)[cat]][que]);
 }
 
-// Picking random question from available set of questions
-for(let i=0; i<3; ++i) {
-    dailyDoubles.push(pickRandomQuestion());
+function isDailyDoubleChecker(nested, x, y, z) {    
+    for(let i=0; i<nested.length; ++i) {
+        if(nested[i][0]==x && nested[i][1]==y && nested[i][2]==z) return true;
+    }
+    return false;
 }
 
 // Client socket connection handler
@@ -42,6 +54,8 @@ io.on('connection', (socket) => {
     socket.on('room', ({username, room}) => {
         const user = userJoin(socket.id, username, room, 0);
         socket.join(user.room);
+        socket.room = user.room;
+        socket.name = user.user;
         io.to(user.room).emit('roomUsers', {
             id: socket.id,
             room: user.room,
@@ -56,6 +70,11 @@ io.on('connection', (socket) => {
             trackRoom[room][0]['z'] = 0;
             trackRoom[room][1] = {};
             trackRoom[room][1]['trackWrong'] = [];
+            trackRoom[room][2] = {};
+            trackRoom[room][2]['dailyDoubles'] = [];
+            for(let i=0; i<3; ++i) {
+                trackRoom[room][2]['dailyDoubles'].push(pickRandomQuestion());
+            }
         }
 
         io.to(user.room).emit('userJoin', {
@@ -67,21 +86,14 @@ io.on('connection', (socket) => {
         let z = trackRoom[room][0]['z'];
         let obj = boards[x].categories[Object.keys(boards[x].categories)[y]][z];
 
-        dailyDoubles.forEach(ele => {
-            if(ele[0]==x && ele[1]==y && ele[2]==z) {
-                isDailyDouble = true;
-            }
-        });
-
         io.to(user.room).emit('question', {
             que : obj.question,
             ans : obj.answer,
             board : x,
             point : x==1?obj.point*2:obj.point,
             category : Object.keys(boards[x].categories)[y],
-            isDailyDouble : isDailyDouble
+            isDailyDouble : isDailyDoubleChecker(trackRoom[room][2]['dailyDoubles'], x, y, z)
         });
-        isDailyDouble = false;
     });
 
     // On correct answer event handler
@@ -113,12 +125,6 @@ io.on('connection', (socket) => {
             z = z + 1;
         }
 
-        dailyDoubles.forEach(ele => {
-            if(ele[0]==x && ele[1]==y && ele[2]==z) {
-                isDailyDouble = true;
-            }
-        });
-
         let obj = boards[x].categories[Object.keys(boards[x].categories)[y]][z];
 
         io.to(data.room).emit('nextQue', {
@@ -127,9 +133,8 @@ io.on('connection', (socket) => {
             board : x,
             point : x==1?obj.point*2:obj.point,
             category : Object.keys(boards[x].categories)[y],
-            isDailyDouble : isDailyDouble
+            isDailyDouble : isDailyDoubleChecker(trackRoom[data.room][2]['dailyDoubles'], x, y, z)
         });
-        isDailyDouble = false;
         trackRoom[data.room][0]['x'] = x;
         trackRoom[data.room][0]['y'] = y;
         trackRoom[data.room][0]['z'] = z;
@@ -167,12 +172,6 @@ io.on('connection', (socket) => {
             else {
                 z = z + 1;
             }
-
-            dailyDoubles.forEach(ele => {
-                if(ele[0]==x && ele[1]==y && ele[2]==z) {
-                    isDailyDouble = true;
-                }
-            });
     
             let obj = boards[x].categories[Object.keys(boards[x].categories)[y]][z];
     
@@ -182,9 +181,8 @@ io.on('connection', (socket) => {
                 board : x,
                 point : x==1?obj.point*2:obj.point,
                 category : Object.keys(boards[x].categories)[y],
-                isDailyDouble : isDailyDouble
+                isDailyDouble : isDailyDoubleChecker(trackRoom[data.room][2]['dailyDoubles'], x, y, z)
             });
-            isDailyDouble = false;
             trackRoom[data.room][0]['x'] = x;
             trackRoom[data.room][0]['y'] = y;
             trackRoom[data.room][0]['z'] = z;
@@ -198,7 +196,46 @@ io.on('connection', (socket) => {
         trackRoom[room][0]['y'] = 0;
         trackRoom[room][0]['z'] = 0;
         trackRoom[room][1]['trackWrong'].length = 0;
-        io.to(room).emit('quit');
+        io.to(room).emit('roomUsers', {
+            room: room,
+            roomUsers: getRoomUsers(room)
+        });
+
+        let obj = boards[0].categories[Object.keys(boards[0].categories)[0]][0];
+        
+        trackRoom[room][2]['dailyDoubles'].length = 0;
+        for(let i=0; i<3; ++i) {
+            trackRoom[room][2]['dailyDoubles'].push(pickRandomQuestion());
+        }
+
+        io.to(room).emit('question', { 
+            que : obj.question,
+            ans : obj.answer,
+            board : trackRoom[room][0]['x'],
+            point : trackRoom[room][0]['x']==1?obj.point*2:obj.point,
+            category : Object.keys(boards[trackRoom[room][0]['x']].categories)[trackRoom[room][0]['y']],
+            isDailyDouble : isDailyDoubleChecker(trackRoom[room][2]['dailyDoubles'], 0, 0, 0)
+        });
+        // io.to(room).emit('quit');
+    });
+
+    socket.on('logout', () => {
+        const user = userLeave(socket.id);
+
+        if(user) {
+            io.to(user.room).emit('roomUsers', {
+                room: user.room,
+                roomUsers: getRoomUsers(user.room)
+            });
+
+            io.to(user.room).emit('userLeft', {
+                message : formatMessage(user.username)
+            });
+            const idx = trackRoom[user.room][1]['trackWrong'].findIndex(ele => ele === user.username);
+            if(idx !== -1) {
+                trackRoom[user.room][1]['trackWrong'].splice(idx, 1)[0];
+            }
+        }
     });
 
     // Broadcast message
@@ -225,6 +262,10 @@ io.on('connection', (socket) => {
 });
 
 // router
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
     res.redirect('index.html');
+});
+
+app.post('/game', (req, res) => {
+    res.redirect('game.html');
 });

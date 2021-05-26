@@ -56,7 +56,10 @@ Array.prototype.remove = function(value) {
 }
 
 function resetUsers(room) {
-    users.remove(room);
+    users.forEach(ele => {
+        (ele.room == room)&&(ele.score=0);
+    })
+    // users.remove(room);
 }
 
 module.exports = {

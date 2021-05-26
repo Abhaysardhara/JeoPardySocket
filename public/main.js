@@ -2,31 +2,43 @@
 *    Description: This file handles DOM events and socket events. *
 *    Author: Abhay Sardhara                                       *
 *    Email: abhays7675@gmail.com                                  *
-*******************************************************************/
 
-var socket = io();
+*******************************************************************/
+var socket = io({transports: ['websocket'], upgrade: false});
 
 // DOM Events
-const submit = document.getElementById('create-room');
-const yroom = document.getElementById('room-name');
-const yname = document.getElementById('your-name');
 const userList = document.getElementById('users');
 const trackList = document.getElementById('track');
 const checkAns = document.getElementById('checkAns');
 const resetGame = document.getElementById('resetGame');
+const logout = document.getElementById('logout');
 const msg = document.getElementById('msg');
 var sound = new Audio("./assets/sounds/dailyDouble.wav");
 document.getElementById('seeAns').style.display = "none";
-var room;
-var username,
+var room = sessionStorage.getItem("room");
+var username = sessionStorage.getItem("name"),
     answer,
     point,
     status=false;
 
-// Reload page after end of game
-function reloadPage() {
-    location.reload();
-}
+// Join User to specified room
+socket.emit('room', {username, room});
+
+$(function() {
+    $("form").submit(function() { return false; });
+});
+
+// Execute a function when the user releases a key on the keyboard
+msg.addEventListener("keyup", event => {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the checkAns element with a click
+      checkAns.click();
+    }
+});
+  
 
 // Check similarity between user input and answer of question
 function similarity(s1, s2) {
@@ -123,16 +135,16 @@ function displayCat(data) {
     document.getElementById('category').innerText = data;
 }
 
-// Handle event during user joining
-submit.addEventListener('click', () => {
-    room = yroom.value;
-    username = yname.value;
-    socket.emit('room', {username, room});
-})
-
+// Reset Game in room
 resetGame.addEventListener('click', () => {
     socket.emit('resetGame', room);
-    setTimeout(reloadPage, 2000);
+    // setTimeout(reloadPage, 2000);
+})
+
+// Logout from room
+logout.addEventListener('click', () => {
+    socket.emit('logout');
+    window.location = "http://localhost:3000/";
 })
 
 // Check user's answer (If similarity is greater or equal to 85% then answer is right, otherwise wrong)
@@ -164,9 +176,9 @@ socket.on('userJoin', (data) => {
     outputTracksjoin(data.message);
 })
 
-socket.on('quit', () => {
-    location.reload();
-})
+// socket.on('redirectToHome', () => {
+//     location.href('/');
+// })
 
 // Handle game end
 socket.on('gameEnd', (data) => {
@@ -182,7 +194,7 @@ socket.on('gameEnd', (data) => {
         socket.emit('resetGame', room);
         alert(text);
     }
-    setTimeout(reloadPage, 2000);
+    location.href('/');
 })
 
 // first question of the game
@@ -246,4 +258,4 @@ socket.on('roomUsers', (data) => {
 // Handle Socket Reconnection
 socket.on('reconnect_error', () => {
     console.log('attempt to reconnect has failed');
-}) 
+})
