@@ -154,7 +154,7 @@ resetGame.addEventListener('click', () => {
 // Logout from room
 logout.addEventListener('click', () => {
     socket.emit('logout');
-    window.location = "http://localhost:3000/";
+    window.location = "https://mnnit-jeopardy-socket.herokuapp.com/";
 })
 
 // Check user's answer (If similarity is greater or equal to 85% then answer is right, otherwise wrong)
