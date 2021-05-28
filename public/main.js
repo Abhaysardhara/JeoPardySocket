@@ -210,6 +210,7 @@ socket.on('gameEnd', (data) => {
 
 // first question of the game
 socket.on('question', (data) => {
+    document.getElementById('dailyDouble').style.display = "none";
     msg.value = '';
     displayBoard(data.board);
     displayQuestion(data.que);
@@ -217,7 +218,6 @@ socket.on('question', (data) => {
     displayCat(data.category);
     answer = data.ans;
     point = data.point;
-    document.getElementById('dailyDouble').style.display = "none";
     document.getElementById('seeAns').style.display = "none";
     document.getElementById('solution').innerText = '';
     if(data.isDailyDouble) {
@@ -232,6 +232,7 @@ socket.on('question', (data) => {
 
 // Next question of the game
 socket.on('nextQue', (data) => {
+    document.getElementById('dailyDouble').style.display = "none";
     msg.value='';
     if(document.getElementById("answer").style.display = "none") {
         document.getElementById("answer").style.display = "block";
@@ -242,7 +243,6 @@ socket.on('nextQue', (data) => {
     displayQuestion(data.que);
     displayPoint(data.point);
     displayCat(data.category);
-    document.getElementById('dailyDouble').style.display = "none";
     answer = data.ans;
     point = data.point;
     if(data.isDailyDouble) {
