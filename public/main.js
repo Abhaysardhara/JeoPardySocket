@@ -2,8 +2,9 @@
 *    Description: This file handles DOM events and socket events. *
 *    Author: Abhay Sardhara                                       *
 *    Email: abhays7675@gmail.com                                  *
-
 *******************************************************************/
+
+// Socket Initialization
 var socket = io({transports: ['websocket'], upgrade: false});
 
 // DOM Events
@@ -24,21 +25,10 @@ var username = sessionStorage.getItem("name"),
 // Join User to specified room
 socket.emit('room', {username, room});
 
-$(function() {
-    $("form").submit(function() { return false; });
-});
 
-// Execute a function when the user releases a key on the keyboard
-msg.addEventListener("keyup", event => {
-    // Number 13 is the "Enter" key on the keyboard
-    if (event.keyCode === 13) {
-      // Cancel the default action, if needed
-      event.preventDefault();
-      // Trigger the checkAns element with a click
-      checkAns.click();
-    }
-});
-  
+/**********************************
+*      Utility Functions          *
+***********************************/
 
 // Check similarity between user input and answer of question
 function similarity(s1, s2) {
@@ -135,6 +125,26 @@ function displayCat(data) {
     document.getElementById('category').innerText = data;
 }
 
+/**********************************
+*      DOM Event Section          *
+***********************************/
+
+// Avoid refresh page after form sumission
+$(function() {
+    $("form").submit(function() { return false; });
+});
+
+// Execute a function when the user releases a key on the keyboard
+msg.addEventListener("keyup", event => {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the checkAns element with a click
+      checkAns.click();
+    }
+});
+
 // Reset Game in room
 resetGame.addEventListener('click', () => {
     socket.emit('resetGame', room);
@@ -171,14 +181,15 @@ document.getElementById('seeAns').addEventListener('click', () => {
     document.getElementById('solution').innerText = answer;
 });
 
+
+/**********************************
+*      Socket Logic Section       *
+***********************************/
+
 // User Join
 socket.on('userJoin', (data) => {
     outputTracksjoin(data.message);
 })
-
-// socket.on('redirectToHome', () => {
-//     location.href('/');
-// })
 
 // Handle game end
 socket.on('gameEnd', (data) => {
