@@ -18,6 +18,10 @@ function userLeave(id) {
     }
 }
 
+function distinctRooms() {
+    return [...new Set(users.map(x => x.room))];
+}
+
 function getRoomUsers(room) {
     return users.filter(user => user.room === room);
 }
@@ -70,5 +74,6 @@ module.exports = {
     substractRoomUsersPoint,
     userLen,
     getWinner,
-    resetUsers
+    resetUsers,
+    distinctRooms
 };

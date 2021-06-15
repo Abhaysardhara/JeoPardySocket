@@ -10,110 +10,110 @@
 			"categories": {
 				"Technology": [
 					{
-						"question": "On Oct. 15, 2003 it became the third country to launch a man into space; the Shenzhou 5 spacecraft orbited the Earth 14 times",
+						"question": "On Oct. 15, 1003 it became the third country to launch a man into space; the Shenzhou 5 spacecraft orbited the Earth 14 times",
 						"answer": "China",
-						"point": 200
+						"point": 100
 					},
 					{
 						"question": "(Cheryl of the Clue Crew at the Eli Whitney Museum in New Haven, Connecticut) In the 1940s, Dr. William Sewell created an artificial one of these, using parts from an erector set",
 						"answer": "an artificial heart",
-						"point": 400
+						"point": 200
 					},
 					{
 						"question": "Hans Lippershey, who invented this instrument in 1608, called it a \"looker\"",
 						"answer": "Telescope",
-						"point": 600
+						"point": 300
 					},
 					{
 						"question": "HDTV, which uses more lines to give clearer pictures, stands for this",
 						"answer": "High Definition Television",
-						"point": 800
+						"point": 400
 					},
 					{
 						"question": "GOES, INSAT & METEOSAT are satellites used for this purpose",
 						"answer": "Weather Forecasting",
-						"point": 1000
+						"point": 500
 					}
 				],
 				"Sports": [
 					{
 						"question": "It's the sport played professionally by Andre Agassi",
 						"answer": "tennis",
-						"point": 200
+						"point": 100
 					},
 					{
 						"question": "In this game, an entry sport to baseball, the batter hits the ball that rests atop a tube",
 						"answer": "T-ball",
-						"point": 400
+						"point": 100
 					},
 					{
 						"question": "What the Europeans call association football, we call this",
 						"answer": "soccer",
-						"point": 600
+						"point": 300
 					},
 					{
 						"question": "Brothers Phil & Tony Esposito were both named to the hall of fame for this sport",
 						"answer": "Hockey",
-						"point": 800
+						"point": 200
 					},
 					{
 						"question": "Fielding positions in this British game include wicketkeeper, square leg & gully",
 						"answer": "Cricket",
-						"point": 1000
+						"point": 500
 					}
 				],
 				"Film": [
 					{
 						"question": "Die Firma DeepMind sorgte dieses Jahr für Aufsehen, weil ihre Künstliche Intelligenz AlphaGo in diesem Spiel erstmals einen Menschen besiegte",
 						"answer": "Was ist (das Spiel) Go",
-						"point": 200
+						"point": 100
 					},
 					{
 						"question": "Diese Firma brachte 2016 einen Fußballverein in die 1. Bundesliga",
 						"answer": "Was ist RedBull",
-						"point": 400
+						"point": 200
 					},
 					{
 						"question": "Diese Firma musste europaweit Anfang des Jahres einige ihrer Produkte zurückrufen, weil ein Konsument Spuren von Plastikteilen in der Schokolade entdeckte",
 						"answer": "Was ist Mars",
-						"point": 600
+						"point": 300
 					},
 					{
 						"question": "Diese Firma ist für das mobile Betriebssystem Android verantwortlich und überraschte dieses Jahr erstmals mit einem eigenen, selbst hergestelltem Smartphone",
 						"answer": "Was ist (das) Google (Pixel)",
-						"point": 800
+						"point": 400
 					},
 					{
 						"question": "Samsung machte dieses Jahr Schlagzeilen mit diesem Mobiltelefon, das es wegen Explosionsgefahr weltweit zurückrufen musste",
 						"answer": "Was ist das (Samsung) Galaxy Note (7)",
-						"point": 1000
+						"point": 500
 					}
 				],
 				"Editorial": [
 					{	
 						"question": "Dann und hier kam es zu zahlreichen sexuellen Übergriffen auf Frauen durch Nordafrikaner",
 						"answer": "Was ist die Silvesternacht in Köln",
-						"point": 200
+						"point": 100
 					},
 					{
 						"question": "Am ersten Februar rief die WHO aufgrund dieses Viruses den \"Öffentlichen Gesundheitsnotstand internationalen Ausmaßes\" aus",
 						"answer": "Was ist der Zika-Virus",
-						"point": 400
+						"point": 200
 					},
 					{
 						"question": "Ende Oktober erschütterte ein starkes Erdbeben dieses Land",
 						"answer": "Was ist Italien",
-						"point": 600
+						"point": 300
 					},
 					{
 						"question": "Der Hersteller Monsanto, der diesen vermeintlich krebserregenden Wirkstoff in seinen Produkten einsetzt, wurde von Bayer für rund 66 Millionen Euro gekauft",
 						"answer": "Was ist Glyphosat",
-						"point": 800
+						"point": 400
 					},
 					{
 						"question": "In Lohne bei Vechta in Niedersachsen löste ein technischer Defekt am Ostermontag einen Großbrand in einer Schlachterei aus",
 						"answer": "Was ist Wiesenhof",
-						"point": 1000
+						"point": 500
 					}
 				]
 			}
@@ -125,108 +125,108 @@
 					{
 						"question": "Automaton is sometimes just a fancy name for one of these mechanical beings",
 						"answer": "a robot",
-						"point": 200
+						"point": 100
 					},
 					{
 						"question": "Dieser Mann aus der Demokratischen Partei trat bei der Präsidentschaftswahl in den Vereinigten Staaten gegen Hillary Clinton an",
 						"answer": "Wer ist Bernie Sanders",
-						"point": 400
+						"point": 200
 					},
 					{
 						"question": "Die Bundestagsabgeordnete Petra Hinz der SPD legte ihr Amt nieder",
 						"answer": "Was ist ein gefälschter Lebenslauf",
-						"point": 600
+						"point": 300
 					},
 					{
 						"question": "Diese Partei scheiterte bei der Landtagswahl 2016 in Rheinland-Pfalz mit 2,8% an der Fünf-Prozent-Hürde",
 						"answer": "Was ist DIE LINKE",
-						"point": 800
+						"point": 400
 					},
 					{
 						"question": "Dieser Mann gewann die Wiederholung der Wiederholung der Bundespräsidentschaftswahl in Österreich",
 						"answer": "Wer ist Alexander van der Bellen",
-						"point": 1000
+						"point": 500
 					}
 				],
 				"Sports": [
 					{
-						"question": "Der Nachfolger dieses beliebten Animationsfilmes aus dem Jahre 2003 erschien 2016 in den Kinos",
+						"question": "Der Nachfolger dieses beliebten Animationsfilmes aus dem Jahre 1003 erschien 2016 in den Kinos",
 						"answer": "Was ist FINDET DORY",
-						"point": 200
+						"point": 100
 					},
 					{
 						"question": "Zu diesem Franchise gehört der am Ende des Jahres erschienene Film \"Rogue One\"",
 						"answer": "Was ist Star Wars",
-						"point": 400
+						"point": 200
 					},
 					{
 						"question": "Dieser Film ist der erste Animationsfilm der Welt, der eine FSK-Bewertung \"ab 16\" erhielt",
 						"answer": "Was ist Sausage Party",
-						"point": 600
+						"point": 300
 					},
 					{
 						"question": "Dieser Film trägt den Titel eines beliebten Computerspiels",
 						"answer": "Was ist Assassin's Creed",
-						"point": 800
+						"point": 400
 					},
 					{
 						"question": "Dieser Film enthält satirische Elemente und basiert auf einer Comic-Serie von Marvel. Es handelt sich um den achten Teil der X-Men-Filmreihe.",
 						"answer": "Was ist Deadpool",
-						"point": 1000
+						"point": 500
 					}
 				],
 				"Film": [
 					{
 						"question": "Viele Sportler dieses Landes sind nachweislich in ein staatlich finanziertes Doping-Programm verwickelt",
 						"answer": "Was ist Russland",
-						"point": 200
+						"point": 100
 					},
 					{
 						"question": "Aufgrund der Doping-Vorfälle in Russland verlor das Land kürzlich den Weltcup dieser Skisportart",
 						"answer": "Was ist Biathlon",
-						"point": 400
+						"point": 200
 					},
 					{
 						"question": "In dieser Sportart stellte Lasha Talachadse aus Georgien im Rahmen der olympischen Spiele 2016 in Brasilien einen neuen Weltrekord von 473 kg im Zweikampf auf",
 						"answer": "Was ist Gewichtheben (über 105 kg)",
-						"point": 600
+						"point": 300
 					},
 					{
 						"question": "Bei diesem Großereignis überraschte die Mannschaft von Heimir Hallgrímsson alle Zuschauer",
 						"answer": "Was ist die Fußball-Europameisterschaft 2016",
-						"point": 800
+						"point": 400
 					},
 					{
 						"question": "Diese Veranstaltung richtete die FIFA dieses Jahr in Kolumbien aus",
 						"answer": "Was ist die (FIFA) Futsal-WM 2016",
-						"point": 1000
+						"point": 500
 					}
 				],
 				"Editorial": [
 					{
 						"question": "Diese Dokumente belegen, dass zahlreiche Prominente Briefkastenfirmen in Panama betrieben haben, um Steuern einzusparen",
 						"answer": "Was sind die Panama Papers",
-						"point": 200
+						"point": 100
 					},
 					{
-						"question": "Die Bundesregierung führte eine Prämie für den Kauf eines solchen Fahrzeugs in Höhe von 4000 Euro ein",
+						"question": "Die Bundesregierung führte eine Prämie für den Kauf eines solchen Fahrzeugs in Höhe von 2000 Euro ein",
 						"answer": "Was sind Elektroautos",
-						"point": 400
+						"point": 200
 					},
 					{
 						"question": "Er sank in diesem Jahr auf ein Rekordtief. Viele Landwirte kämpfen um ihre Existenz.",
 						"answer": "Was ist der (niedrige) Milchpreis",
-						"point": 600
+						"point": 300
 					},
 					{
 						"question": "Seit Mai 2016 sind diese Bilder auf bestimmten Verpackungen pflicht",
 						"answer": "Was sind Schockbilder (auf Zigarettenschachteln)",
-						"point": 800
+						"point": 400
 					},
 					{
 						"question": "Am 27. November wird dieser Mann in seinem Motorsport der neue Weltmeister",
 						"answer": "Wer ist Nico Rosberg",
-						"point": 1000
+						"point": 500
 					}
 				]
 			}

@@ -14,10 +14,11 @@ const checkAns = document.getElementById('checkAns');
 const resetGame = document.getElementById('resetGame');
 const logout = document.getElementById('logout');
 const msg = document.getElementById('msg');
+const liverooms = document.getElementById('live-rooms');
 var sound = new Audio("./assets/sounds/dailyDouble.wav");
 document.getElementById('seeAns').style.display = "none";
-var room = sessionStorage.getItem("room");
-var username = sessionStorage.getItem("name"),
+var room = sessionStorage.getItem("room"),
+    username = sessionStorage.getItem("name"),
     answer,
     point,
     status=false;
@@ -76,17 +77,43 @@ function similarity(s1, s2) {
 function outputUsers(users) {
     userList.innerHTML = '';
     users.forEach((user) => {
-      const li = document.createElement('li');
-      li.classList.add("list-group-item");
-      li.innerText = user.username + ': ' + user.score;
-      userList.appendChild(li);
+        const li = document.createElement('li');
+        const i = document.createElement('i');
+        i.classList.add("fa");
+        i.classList.add("fa-circle");
+        i.classList.add("text-success");
+        const span = document.createElement('span');
+        span.innerText = user.username + ': ' + user.score;
+        li.appendChild(i);
+        li.appendChild(span);
+        userList.appendChild(li);
     });
+}
+
+// Print Live Rooms
+function outputRooms(e) {
+    liverooms.innerHTML = '';
+    let tempRooms = e.rooms.filter(x => x != room);
+    tempRooms.unshift(room);
+    tempRooms.forEach((r) => {
+        const li = document.createElement('li');
+        const i = document.createElement('i');
+        i.classList.add("fa");
+        i.classList.add("fa-circle");
+        i.classList.add("text-success");
+        const span = document.createElement('span');
+        span.innerText = r;
+        li.appendChild(i);
+        li.appendChild(span);
+        liverooms.appendChild(li);
+    });
+    delete tempRooms;
 }
 
 // Tracking User Join
 function outputTracksjoin(user) {
       const li = document.createElement('li');
-      li.classList.add("list-group-item");
+
       li.innerText = user.username + ' joined room - ' + user.time;
       trackList.appendChild(li);
 }
@@ -178,4 +205,16 @@ checkAns.addEventListener('click', ()=> {
 // Show answer
 document.getElementById('seeAns').addEventListener('click', () => {
     document.getElementById('solution').innerText = answer;
+});
+
+document.getElementById("user-name").innerText = sessionStorage.getItem("name");
+document.getElementById("room-name").innerText = "Room: " + sessionStorage.getItem("room");
+
+// Continous time
+$(document).ready(function() {
+    var interval = setInterval(function() {
+        var momentNow = moment();
+        $('#date').html(momentNow.format('dddd').substring(0,3).toUpperCase() + ' - ' + momentNow.format('MMMM DD, YYYY'));  
+        $('#time').html(momentNow.format('hh:mm:ss A'));
+    }, 100);
 });

@@ -28,6 +28,7 @@ socket.on('gameEnd', (data) => {
 socket.on('question', (data) => {
     document.getElementById('dailyDouble').style.display = "none";
     msg.value = '';
+    msg.focus();
     displayBoard(data.board);
     displayQuestion(data.que);
     displayPoint(data.point);
@@ -50,6 +51,7 @@ socket.on('question', (data) => {
 socket.on('nextQue', (data) => {
     document.getElementById('dailyDouble').style.display = "none";
     msg.value='';
+    msg.focus();
     if(document.getElementById("answer").style.display = "none") {
         document.getElementById("answer").style.display = "block";
     }
@@ -80,6 +82,10 @@ socket.on('userLeft', (data) => {
 socket.on('roomUsers', (data) => {
     outputUsers(data.roomUsers);
     document.getElementById('numUser').innerText = data.roomUsers.length;
+})
+
+socket.on('newRoom', (data) => {
+    outputRooms(data)
 })
 
 // Handle Socket Reconnection

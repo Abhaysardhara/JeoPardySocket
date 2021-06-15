@@ -4,8 +4,11 @@ const path = require('path');
 const port = process.env.PORT || 3000
 const app = express();
 const http = require('http').createServer(app)
+const redis = require('redis');
 const io = require('socket.io')(http)
 var bodyParser = require('body-parser')
+const dotenv = require('dotenv');
+dotenv.config();
 const formatMessage = require('./utils/message');
 const { userJoin, 
         userLeave, 
@@ -14,10 +17,47 @@ const { userJoin,
         substractRoomUsersPoint, 
         userLen, 
         getWinner, 
-        resetUsers
+        resetUsers,
+        distinctRooms
     } = require('./utils/users');
 
-// Server Listener
+
+/**  Normalize a port into a number, string, or false. */
+function normalizePort(val) {
+    var port = parseInt(val, 10);
+  
+    if (isNaN(port)) {
+        return val;
+    }
+  
+    if (port >= 0) {
+        return port;
+    }
+    return false;
+}
+
+// Redis Cache Connection
+const client = redis.createClient({
+    port: normalizePort(process.env.REDIS_PORT),
+    host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASS,
+    tls: {
+        rejectUnauthorized: false
+    }
+});
+
+// client.on('connect', (err, reply) => {
+//     if(err) {
+//         console.log('error redis');
+//     }
+//     console.log('redis connected');
+// });
+// client.on('error', (err) => {
+//     console.log('Error: ' + err);
+
+// });
+
+// HTTP Listen
 http.listen(port, () => console.log(`server listening on port: ${port}`))
 
 // Pre defined states
@@ -26,6 +66,7 @@ var questions = require('./game/jeopardy_questions.json');
 var boards = questions["boards"];
 
 // Express static pages
+app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -36,8 +77,8 @@ function pickRandomQuestion() {
     let board = Math.floor(Math.random() * 2);
     let cat = Math.floor(Math.random() * 4);
     let que = Math.floor(Math.random() * 5);
+    
     return [board, cat, que];
-    // console.log(boards[board].categories[Object.keys(boards[board].categories)[cat]][que]);
 }
 
 function isDailyDoubleChecker(nested, x, y, z) {    
@@ -56,11 +97,8 @@ io.on('connection', (socket) => {
         socket.join(user.room);
         socket.room = user.room;
         socket.name = user.user;
-        io.to(user.room).emit('roomUsers', {
-            id: socket.id,
-            room: user.room,
-            roomUsers: getRoomUsers(user.room)
-        });
+
+        io.sockets.emit('newRoom', {rooms : distinctRooms()});
 
         if(userLen(room) == 1) {
             trackRoom[room] = [];
@@ -76,6 +114,12 @@ io.on('connection', (socket) => {
                 trackRoom[room][2]['dailyDoubles'].push(pickRandomQuestion());
             }
         }
+
+        io.to(user.room).emit('roomUsers', {
+            id: socket.id,
+            room: user.room,
+            roomUsers: getRoomUsers(user.room)
+        });
 
         io.to(user.room).emit('userJoin', {
             message : formatMessage(user.username)
@@ -96,9 +140,10 @@ io.on('connection', (socket) => {
         });
     });
 
-    // On correct answer event handler
+    // Correct answer event handler
     socket.on('addPoint', (data) => {
         updateRoomUsersPoint(data.username, data.point, data.room);
+        trackRoom[data.room][1]['trackWrong'].length=0;
         io.to(data.room).emit('roomUsers', {
             roomUsers: getRoomUsers(data.room)
         });
@@ -106,6 +151,7 @@ io.on('connection', (socket) => {
         let x = trackRoom[data.room][0]['x'];
         let y = trackRoom[data.room][0]['y'];
         let z = trackRoom[data.room][0]['z'];
+
         if(x==2 && y==0 && z==0) {
             x=0; y=0; z=0;
             io.to(data.room).emit('gameEnd', {
@@ -140,7 +186,7 @@ io.on('connection', (socket) => {
         trackRoom[data.room][0]['z'] = z;
     });
 
-    // On wrong answer event handler
+    // Wrong answer event handler
     socket.on('substractPoint', (data) => {
         substractRoomUsersPoint(data.username, data.point, data.room);
         io.to(data.room).emit('roomUsers', {
@@ -192,10 +238,12 @@ io.on('connection', (socket) => {
     // Reset game
     socket.on('resetGame', (room) => {
         resetUsers(room);
+
         trackRoom[room][0]['x'] = 0;
         trackRoom[room][0]['y'] = 0;
         trackRoom[room][0]['z'] = 0;
         trackRoom[room][1]['trackWrong'].length = 0;
+
         io.to(room).emit('roomUsers', {
             room: room,
             roomUsers: getRoomUsers(room)
@@ -238,15 +286,15 @@ io.on('connection', (socket) => {
         }
     });
 
-    // Broadcast message
-    socket.on('message', (data) => {
-        text[data.room] = data.obj
-        socket.compress(true).broadcast.to(data.room).emit('text', data.obj);
+    // Broadcast message (chat PopUp)
+    socket.on('new message', (data) => {
+        socket.broadcast.to(data.room).emit('text', data);
     });
 
     // User disconnect event handler
     socket.on('disconnect', () => {
         const user = userLeave(socket.id);
+        io.sockets.emit('newRoom', {rooms : distinctRooms()});
 
         if(user) {
             io.to(user.room).emit('roomUsers', {
@@ -263,9 +311,18 @@ io.on('connection', (socket) => {
 
 // router
 app.get('/', (req, res) => {
-    res.redirect('index.html');
+    res.render('index', {isSet: false});
 });
 
 app.post('/game', (req, res) => {
-    res.redirect('game.html');
+    res.render('game');
 });
+
+app.post('/new', (req, res) => {
+    if(userLen(req.body.roomname) == 4) {
+        res.render('index', {message: 'Room is full, Create new room or join other room', isSet: true});
+    }
+    else {
+        res.render('new');
+    }
+})
