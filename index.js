@@ -7,6 +7,7 @@ const http = require('http').createServer(app)
 const redis = require('redis');
 const io = require('socket.io')(http)
 var bodyParser = require('body-parser')
+var compression = require('compression');
 const dotenv = require('dotenv');
 dotenv.config();
 const formatMessage = require('./utils/message');
@@ -67,7 +68,19 @@ var boards = questions["boards"];
 
 // Express static pages
 app.set('view engine', 'hbs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(compression());
+app.use(express.static(path.join(__dirname, 'public'), {
+    etag: true,
+    lastModified: true,
+    setHeaders: (res, path) => {
+        if (path.match(/\.(css|png|jpg|jpeg|gif|ico|svg|js)$/)) {
+            const date = new Date();
+            date.setFullYear(date.getFullYear() + 1);
+            res.setHeader("Expires", date.toUTCString());
+            res.setHeader("Cache-Control", "public, max-age=345600, immutable");
+        }
+    }
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: 'application/*+json' }));
