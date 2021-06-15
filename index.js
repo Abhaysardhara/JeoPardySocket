@@ -4,7 +4,6 @@ const path = require('path');
 const port = process.env.PORT || 3000
 const app = express();
 const http = require('http').createServer(app)
-const redis = require('redis');
 const io = require('socket.io')(http)
 var bodyParser = require('body-parser')
 var compression = require('compression');
@@ -38,14 +37,14 @@ function normalizePort(val) {
 }
 
 // Redis Cache Connection
-const client = redis.createClient({
-    port: normalizePort(process.env.REDIS_PORT),
-    host: process.env.REDIS_HOST,
-    password: process.env.REDIS_PASS,
-    tls: {
-        rejectUnauthorized: false
-    }
-});
+// const client = redis.createClient({
+//     port: normalizePort(process.env.REDIS_PORT),
+//     host: process.env.REDIS_HOST,
+//     password: process.env.REDIS_PASS,
+//     tls: {
+//         rejectUnauthorized: false
+//     }
+// });
 
 // client.on('connect', (err, reply) => {
 //     if(err) {
