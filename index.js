@@ -7,8 +7,6 @@ const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 var bodyParser = require('body-parser')
 var compression = require('compression');
-const dotenv = require('dotenv');
-dotenv.config();
 const formatMessage = require('./utils/message');
 const { userJoin, 
         userLeave, 
