@@ -4,7 +4,6 @@ const path = require('path');
 const port = process.env.PORT || 3000
 const app = express();
 const http = require('http').createServer(app)
-const redis = require('redis');
 const io = require('socket.io')(http)
 var bodyParser = require('body-parser')
 var compression = require('compression');
@@ -38,14 +37,14 @@ function normalizePort(val) {
 }
 
 // Redis Cache Connection
-const client = redis.createClient({
-    port: normalizePort(process.env.REDIS_PORT),
-    host: process.env.REDIS_HOST,
-    password: process.env.REDIS_PASS,
-    tls: {
-        rejectUnauthorized: false
-    }
-});
+// const client = redis.createClient({
+//     port: normalizePort(process.env.REDIS_PORT),
+//     host: process.env.REDIS_HOST,
+//     password: process.env.REDIS_PASS,
+//     tls: {
+//         rejectUnauthorized: false
+//     }
+// });
 
 // client.on('connect', (err, reply) => {
 //     if(err) {
@@ -116,15 +115,11 @@ io.on('connection', (socket) => {
         if(userLen(room) == 1) {
             trackRoom[room] = [];
             trackRoom[room][0] = {};
-            trackRoom[room][0]['x'] = 0;
-            trackRoom[room][0]['y'] = 0;
-            trackRoom[room][0]['z'] = 0;
+            trackRoom[room][0]['trackWrong'] = [];
             trackRoom[room][1] = {};
-            trackRoom[room][1]['trackWrong'] = [];
-            trackRoom[room][2] = {};
-            trackRoom[room][2]['dailyDoubles'] = [];
+            trackRoom[room][1]['dailyDoubles'] = [];
             for(let i=0; i<3; ++i) {
-                trackRoom[room][2]['dailyDoubles'].push(pickRandomQuestion());
+                trackRoom[room][1]['dailyDoubles'].push(pickRandomQuestion());
             }
         }
 
@@ -137,66 +132,37 @@ io.on('connection', (socket) => {
         io.to(user.room).emit('userJoin', {
             message : formatMessage(user.username)
         });
+    });
 
-        let x = trackRoom[room][0]['x'];
-        let y = trackRoom[room][0]['y'];
-        let z = trackRoom[room][0]['z'];
-        let obj = boards[x].categories[Object.keys(boards[x].categories)[y]][z];
-
-        io.to(user.room).emit('question', {
+    socket.on('getQuestion', (data) => {
+        let obj = boards[data.x].categories[Object.keys(boards[data.x].categories)[data.y]][data.z];
+        io.to(data.room).emit('question', {
             que : obj.question,
             ans : obj.answer,
-            board : x,
-            point : x==1?obj.point*2:obj.point,
-            category : Object.keys(boards[x].categories)[y],
-            isDailyDouble : isDailyDoubleChecker(trackRoom[room][2]['dailyDoubles'], x, y, z)
+            board : data.x,
+            point : data.x==1?obj.point*2:obj.point,
+            category : Object.keys(boards[data.x].categories)[data.y],
+            isDailyDouble : isDailyDoubleChecker(trackRoom[data.room][1]['dailyDoubles'], data.x, data.y, data.z),
+            y : data.y,
+            z : data.z
         });
-    });
+    })
 
     // Correct answer event handler
     socket.on('addPoint', (data) => {
         updateRoomUsersPoint(data.username, data.point, data.room);
-        trackRoom[data.room][1]['trackWrong'].length=0;
+        trackRoom[data.room][0]['trackWrong'].length=0;
         io.to(data.room).emit('roomUsers', {
             roomUsers: getRoomUsers(data.room)
         });
 
-        let x = trackRoom[data.room][0]['x'];
-        let y = trackRoom[data.room][0]['y'];
-        let z = trackRoom[data.room][0]['z'];
-
-        if(x==2 && y==0 && z==0) {
-            x=0; y=0; z=0;
+        if(data.round == 2) {
             io.to(data.room).emit('gameEnd', {
                 winner : getWinner(data.room)    
             });
         }
-        else if(x<2 && y==3 && z==4) {
-            x = x + 1;
-            y = 0;
-            z = 0;
-        }
-        else if(z==4) {
-            y = y + 1;
-            z = 0;
-        }
-        else {
-            z = z + 1;
-        }
 
-        let obj = boards[x].categories[Object.keys(boards[x].categories)[y]][z];
-
-        io.to(data.room).emit('nextQue', {
-            que : obj.question,
-            ans : obj.answer,
-            board : x,
-            point : x==1?obj.point*2:obj.point,
-            category : Object.keys(boards[x].categories)[y],
-            isDailyDouble : isDailyDoubleChecker(trackRoom[data.room][2]['dailyDoubles'], x, y, z)
-        });
-        trackRoom[data.room][0]['x'] = x;
-        trackRoom[data.room][0]['y'] = y;
-        trackRoom[data.room][0]['z'] = z;
+        io.to(data.room).emit('dashboard');
     });
 
     // Wrong answer event handler
@@ -206,45 +172,18 @@ io.on('connection', (socket) => {
             roomUsers: getRoomUsers(data.room)
         });
 
-        // trackWrong.push(data.username);
-        trackRoom[data.room][1]['trackWrong'].push(data.username);
-        if(trackRoom[data.room][1]['trackWrong'].length == userLen(data.room)) {
-            trackRoom[data.room][1]['trackWrong'].length = 0;
-            let x = trackRoom[data.room][0]['x'];
-            let y = trackRoom[data.room][0]['y'];
-            let z = trackRoom[data.room][0]['z'];
-            if(x==2 && y==0 && z==0) {
-                x=0; y=0; z=0;
+        trackRoom[data.room][0]['trackWrong'].push(data.username);
+
+        if(trackRoom[data.room][0]['trackWrong'].length == userLen(data.room)) {
+            trackRoom[data.room][0]['trackWrong'].length = 0;
+
+            if(data.round == 2) {
                 io.to(data.room).emit('gameEnd', {
                     winner : getWinner(data.room)    
                 });
             }
-            else if(x<2 && y==3 && z==4) {
-                x = x + 1;
-                y = 0;
-                z = 0;
-            }
-            else if(z==4) {
-                y = y + 1;
-                z = 0;
-            }
-            else {
-                z = z + 1;
-            }
-    
-            let obj = boards[x].categories[Object.keys(boards[x].categories)[y]][z];
-    
-            io.to(data.room).emit('nextQue', {
-                que : obj.question,
-                ans : obj.answer,
-                board : x,
-                point : x==1?obj.point*2:obj.point,
-                category : Object.keys(boards[x].categories)[y],
-                isDailyDouble : isDailyDoubleChecker(trackRoom[data.room][2]['dailyDoubles'], x, y, z)
-            });
-            trackRoom[data.room][0]['x'] = x;
-            trackRoom[data.room][0]['y'] = y;
-            trackRoom[data.room][0]['z'] = z;
+
+            io.to(data.room).emit('dashboard');
         } 
     });
 
@@ -252,32 +191,19 @@ io.on('connection', (socket) => {
     socket.on('resetGame', (room) => {
         resetUsers(room);
 
-        trackRoom[room][0]['x'] = 0;
-        trackRoom[room][0]['y'] = 0;
-        trackRoom[room][0]['z'] = 0;
-        trackRoom[room][1]['trackWrong'].length = 0;
+        trackRoom[room][0]['trackWrong'].length = 0;
 
         io.to(room).emit('roomUsers', {
             room: room,
             roomUsers: getRoomUsers(room)
         });
-
-        let obj = boards[0].categories[Object.keys(boards[0].categories)[0]][0];
         
-        trackRoom[room][2]['dailyDoubles'].length = 0;
+        trackRoom[room][1]['dailyDoubles'].length = 0;
         for(let i=0; i<3; ++i) {
-            trackRoom[room][2]['dailyDoubles'].push(pickRandomQuestion());
+            trackRoom[room][1]['dailyDoubles'].push(pickRandomQuestion());
         }
 
-        io.to(room).emit('question', { 
-            que : obj.question,
-            ans : obj.answer,
-            board : trackRoom[room][0]['x'],
-            point : trackRoom[room][0]['x']==1?obj.point*2:obj.point,
-            category : Object.keys(boards[trackRoom[room][0]['x']].categories)[trackRoom[room][0]['y']],
-            isDailyDouble : isDailyDoubleChecker(trackRoom[room][2]['dailyDoubles'], 0, 0, 0)
-        });
-        // io.to(room).emit('quit');
+        io.to(room).emit('resetDashboard');
     });
 
     socket.on('logout', () => {
@@ -292,9 +218,9 @@ io.on('connection', (socket) => {
             io.to(user.room).emit('userLeft', {
                 message : formatMessage(user.username)
             });
-            const idx = trackRoom[user.room][1]['trackWrong'].findIndex(ele => ele === user.username);
+            const idx = trackRoom[user.room][0]['trackWrong'].findIndex(ele => ele === user.username);
             if(idx !== -1) {
-                trackRoom[user.room][1]['trackWrong'].splice(idx, 1)[0];
+                trackRoom[user.room][0]['trackWrong'].splice(idx, 1)[0];
             }
         }
     });

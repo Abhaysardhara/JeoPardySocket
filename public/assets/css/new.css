@@ -553,12 +553,12 @@ a.guest-on i {
 }
  .floating-chat .chat .messages li.other:before {
 	 right: -45px;
-	 background-image: url(https://github.com/Thatkookooguy.png);
+	 background-image: url(../image/Thatkookooguy_tiny.jpg);
 }
  .floating-chat .chat .messages li.other:after {
 	 border-right: 10px solid transparent;
 	 right: -10px;
-}
+}   
  .floating-chat .chat .messages li.self {
 	 animation: show-chat-even 0.15s 1 ease-in;
 	 -moz-animation: show-chat-even 0.15s 1 ease-in;
@@ -569,7 +569,7 @@ a.guest-on i {
 }
  .floating-chat .chat .messages li.self:before {
 	 left: -45px;
-	 background-image: url(https://github.com/ortichon.png);
+	 background-image: url(../image/ortichon.jpg);
 }
  .floating-chat .chat .messages li.self:after {
 	 border-left: 10px solid transparent;
@@ -650,4 +650,99 @@ a.guest-on i {
 	 100% {
 		 margin-right: 0;
 	}
+}
+
+/* Game dashboard CSS */
+.hidden {
+    display: none;
+}
+
+.display {
+    display: block;
+}
+
+.disabled {
+  background: linear-gradient(rgba(230, 143, 150, 0.7), rgba(233, 42, 68, 0.7));
+  box-shadow: none;
+  filter: none;
+  font-size: 0px;
+}
+
+.game-page {
+    margin-left: 0px;
+}
+
+.round-text {
+    color: #181716;
+    font-family: "Orbitron", sans-serif;
+    font-size: 35px;
+    font-weight: 400;
+    margin: 5px 0px;
+    position: relative;
+    text-align: center;
+    z-index: 12;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.game-board {
+    display: grid;
+    font-family: "Roboto", sans-serif;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin: 0 auto;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+
+.category-text {
+    color: #2F1C63;
+    font-size: 24px;
+    width: 100%;
+}
+
+.clue-box-hover:hover {
+    background: linear-gradient(to bottom right, #FEA99F, #57315c);
+    box-shadow: 1px 1px 15px #01A869;
+    font-size: 30px;
+}
+
+.clue-box {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+    background: linear-gradient(to bottom right, #89a1d4, #11388d);
+    border-radius: 5px;
+    color: white;
+    filter: drop-shadow(2px 2px 3px black);
+    font-size: 28px;
+    height: 70px;
+    list-style-type: none;
+    margin: 8px 0;
+    padding-top: 18px;
+    text-align: center;
+}
+
+.clue-box-answered {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+    background: linear-gradient(rgba(230, 143, 150, 0.7), rgba(233, 42, 68, 0.7));
+    border-radius: 5px;
+    color: white;
+    filter: none;
+    font-size: 0px;
+    height: 70px;
+    list-style-type: none;
+    margin: 8px 0;
+    padding-top: 18px;
+    text-align: center;
 }

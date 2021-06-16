@@ -21,12 +21,24 @@ socket.on('gameEnd', (data) => {
         socket.emit('resetGame', room);
         alert(text);
     }
-    location.href('/');
 })
 
 // first question of the game
 socket.on('question', (data) => {
-    document.getElementById('dailyDouble').style.display = "none";
+    if(round==0) {
+        gamePage0.classList.add('hidden');
+    }
+    else if(round==1) {
+        gamePage1.classList.add('hidden');
+    }
+    else {
+        gamePage2.classList.add('hidden');
+    }
+    roomDesk.classList.remove('hidden');
+    document.getElementById("answer").classList.remove('hidden');
+    document.getElementById('dailyDouble').classList.add('hidden');
+    document.getElementById('show').classList.add('hidden');
+    document.getElementById('solution').innerText = '';
     msg.value = '';
     msg.focus();
     displayBoard(data.board);
@@ -35,43 +47,87 @@ socket.on('question', (data) => {
     displayCat(data.category);
     answer = data.ans;
     point = data.point;
-    document.getElementById('seeAns').style.display = "none";
-    document.getElementById('solution').innerText = '';
     if(data.isDailyDouble) {
-        document.getElementById('dailyDouble').style.display = "block";
+        document.getElementById('dailyDouble').classList.remove('hidden');
         sound.play();
         point += data.point;
         displayPoint(point);
     }
+    y = data.y;
+    z = data.z;
     console.log(data.que);
     console.log(data.ans);
 })
 
-// Next question of the game
-socket.on('nextQue', (data) => {
-    document.getElementById('dailyDouble').style.display = "none";
-    msg.value='';
-    msg.focus();
-    if(document.getElementById("answer").style.display = "none") {
-        document.getElementById("answer").style.display = "block";
+socket.on('dashboard', () => {
+    if(round==0) {
+        gamePage0.classList.remove('hidden');
     }
-    document.getElementById('seeAns').style.display = "none";
-    document.getElementById('solution').innerText = '';
-    displayBoard(data.board);
-    displayQuestion(data.que);
-    displayPoint(data.point);
-    displayCat(data.category);
-    answer = data.ans;
-    point = data.point;
-    if(data.isDailyDouble) {
-        document.getElementById('dailyDouble').style.display = "block";
-        sound.play();
-        point += data.point;
-        displayPoint(point);
+    else if(round==1) {
+        gamePage1.classList.remove('hidden');
     }
-    console.log(data.que);
-    console.log(data.ans);
-});
+    else {
+        gamePage2.classList.remove('hidden');
+    }
+    roomDesk.classList.add('hidden');
+    let dataid = round + '-' + y + '-' + z;
+    let clueBox = document.querySelector(`[data-id="${dataid}"]`);
+    clueBox.classList.add('disabled');
+    clueBox.classList.add('clue-box-answered');
+    clueBox.removeEventListener('click', creatNewClue);
+
+    memory[y][z] = 1;
+
+    let flag = true;
+    memory.forEach(arr => {
+        arr.forEach(e => {
+            if(e==0) {
+                flag = false;
+            }
+        });
+    });
+
+    if(flag) {
+        for(let i=0; i<4; ++i) {
+            for(let j=0; j<5; ++j) {
+                memory[i][j] = 0;
+            }
+        }
+
+        round += 1;
+
+        if(round==1) {
+            gamePage0.classList.add('hidden');
+            gamePage1.classList.remove('hidden');
+        }
+        else if(round==2) {
+            gamePage1.classList.add('hidden');
+            gamePage2.classList.remove('hidden');
+        }
+    }
+    delete flag;
+})
+
+socket.on('resetDashboard', () => {
+    gamePage0.classList.remove('hidden');
+    gamePage1.classList.add('hidden');
+    gamePage2.classList.add('hidden');
+    roomDesk.classList.add('hidden');
+
+    clueBoxes.forEach((clueBox) => {
+        clueBox.classList.remove('disabled');
+        clueBox.classList.remove('clue-box-answered');
+        clueBox.classList.add('clue-box-hover');
+        clueBox.addEventListener('click', creatNewClue);
+    });
+
+    round=0;
+    for(let i=0; i<4; ++i) {
+        for(let j=0; j<5; ++j) {
+            memory[i][j] = 0;
+        }
+    }
+})
 
 // Handle user left event
 socket.on('userLeft', (data) => {

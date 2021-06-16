@@ -15,13 +15,22 @@ const resetGame = document.getElementById('resetGame');
 const logout = document.getElementById('logout');
 const msg = document.getElementById('msg');
 const liverooms = document.getElementById('live-rooms');
+const clueBoxes = document.querySelectorAll('.clue-box');
+const gamePage0 = document.getElementById('gamePage0');
+const gamePage1 = document.getElementById('gamePage1');
+const gamePage2 = document.getElementById('gamePage2');
+const roomDesk = document.getElementById('roomDesk');
 var sound = new Audio("./assets/sounds/dailyDouble.wav");
-document.getElementById('seeAns').style.display = "none";
 var room = sessionStorage.getItem("room"),
     username = sessionStorage.getItem("name"),
     answer,
     point,
+    round=0, y, z,
     status=false;
+var memory = [[0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0]];
 
 // Join User to specified room
 socket.emit('room', {username, room});
@@ -189,12 +198,12 @@ checkAns.addEventListener('click', ()=> {
     if(text.length > 0) {
         let z = similarity(text, answer) * 100.0;
         if(z >= 85) {
-            socket.emit('addPoint', {username, point, room});
+            socket.emit('addPoint', {username, point, room, round});
         }
         else {
-            socket.emit('substractPoint', {username, point, room});
-            document.getElementById("answer").style.display = "none";
-            document.getElementById('seeAns').style.display = "block";
+            socket.emit('substractPoint', {username, point, room, round});
+            document.getElementById('show').classList.remove('hidden');
+            document.getElementById("answer").classList.add('hidden');
         }
     }
     else {
@@ -209,6 +218,16 @@ document.getElementById('seeAns').addEventListener('click', () => {
 
 document.getElementById("user-name").innerText = sessionStorage.getItem("name");
 document.getElementById("room-name").innerText = "Room: " + sessionStorage.getItem("room");
+
+clueBoxes.forEach((clueBox) => {
+    clueBox.addEventListener('click', creatNewClue);
+});
+
+function creatNewClue() {
+    let idx = $(this).data("id");
+    let arr = idx.split("-");
+    socket.emit('getQuestion', {room : room, x: round, y: arr[1], z: arr[2]});
+}
 
 // Continous time
 $(document).ready(function() {
