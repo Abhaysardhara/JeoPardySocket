@@ -711,6 +711,7 @@ a.guest-on i {
     background: linear-gradient(to bottom right, #FEA99F, #57315c);
     box-shadow: 1px 1px 15px #01A869;
     font-size: 30px;
+    cursor: pointer;
 }
 
 .clue-box {
@@ -745,4 +746,11 @@ a.guest-on i {
     margin: 8px 0;
     padding-top: 18px;
     text-align: center;
+}
+
+.clue-box-answered:hover {
+    cursor: text;
+    font-size: 0px;
+    box-shadow: none;
+    background: linear-gradient(rgba(230, 143, 150, 0.7), rgba(233, 42, 68, 0.7));
 }
