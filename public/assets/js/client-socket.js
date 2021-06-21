@@ -9,22 +9,25 @@ socket.on('userJoin', (data) => {
 
 // Handle game end
 socket.on('gameEnd', (data) => {
-    if(data.winner.length == 0) {
-        socket.emit('resetGame', room);
-        alert('No one is winner');
-    }
-    else {
-        let text = '';
-        data.winner.forEach(ele => {
-            text += ele.username + ' is winner\n';
-        });
-        socket.emit('resetGame', room);
-        alert(text);
-    }
+    // if(data.winner.length == 0) {
+    //     socket.emit('resetGame', room);
+    //     alert('No one is winner');
+    // }
+    // else {
+    //     let text = '';
+    //     data.winner.forEach(ele => {
+    //         text += ele.username + ' is winner\n';
+    //     });
+    //     socket.emit('resetGame', room);
+    //     alert(text);
+    // }
+    console.log(data);
+    alert(data.winner);
 })
 
-// first question of the game
+// Response question data from SERVER
 socket.on('question', (data) => {
+    isDD=false;
     if(round==0) {
         gamePage0.classList.add('hidden');
     }
@@ -50,6 +53,7 @@ socket.on('question', (data) => {
     if(data.isDailyDouble) {
         document.getElementById('dailyDouble').classList.remove('hidden');
         sound.play();
+        isDD=true;
         point += data.point;
         displayPoint(point);
     }
@@ -127,6 +131,27 @@ socket.on('resetDashboard', () => {
             memory[i][j] = 0;
         }
     }
+})
+
+socket.on('gameState', (data) => {
+    if(data.board == 1) {
+        gamePage0.classList.add('hidden');
+        gamePage1.classList.remove('hidden');
+    }
+    else if(data.board == 2) {
+        gamePage0.classList.add('hidden');
+        gamePage1.classList.add('hidden');
+        gamePage2.classList.remove('hidden');
+    }
+
+    data.state.forEach(s => {
+        let dataid = s[0] + '-' + s[1] + '-' + s[2];
+        let clueBox = document.querySelector(`[data-id="${dataid}"]`);
+        clueBox.classList.add('disabled');
+        clueBox.classList.add('clue-box-answered');
+        clueBox.removeEventListener('click', creatNewClue);
+    })
+    console.log(data)
 })
 
 // Handle user left event

@@ -26,7 +26,7 @@ var room = sessionStorage.getItem("room"),
     answer,
     point,
     round=0, y, z,
-    status=false;
+    status=false, isDD=false;
 var memory = [[0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0],
@@ -92,6 +92,7 @@ function outputUsers(users) {
         i.classList.add("fa-circle");
         i.classList.add("text-success");
         const span = document.createElement('span');
+        span.classList.add("usernames");
         span.innerText = user.username + ': ' + user.score;
         li.appendChild(i);
         li.appendChild(span);
@@ -104,15 +105,13 @@ function outputRooms(e) {
     liverooms.innerHTML = '';
     let tempRooms = e.rooms.filter(x => x != room);
     tempRooms.unshift(room);
-    tempRooms.forEach((r) => {
+    tempRooms.forEach((r, idx) => {
         const li = document.createElement('li');
-        const i = document.createElement('i');
-        i.classList.add("fa");
-        i.classList.add("fa-circle");
-        i.classList.add("text-success");
         const span = document.createElement('span');
+        if(idx==0) {
+            span.classList.add("text-bold")
+        }
         span.innerText = r;
-        li.appendChild(i);
         li.appendChild(span);
         liverooms.appendChild(li);
     });
@@ -201,7 +200,13 @@ checkAns.addEventListener('click', ()=> {
             socket.emit('addPoint', {username, point, room, round});
         }
         else {
-            socket.emit('substractPoint', {username, point, room, round});
+            if(isDD) {
+                point = point / 2;
+                socket.emit('substractPoint', {username, point, room, round});
+            }
+            else {
+                socket.emit('substractPoint', {username, point, room, round});
+            }
             document.getElementById('show').classList.remove('hidden');
             document.getElementById("answer").classList.add('hidden');
         }

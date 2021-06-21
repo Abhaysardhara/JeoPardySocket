@@ -41,13 +41,28 @@ function userLen(room) {
 }
 
 function getWinner(room) {
-    let maxi=-1;
-    users.forEach(ele => {
-        if((ele.room == room) && (ele.score >= maxi)) {
-            maxi = ele.score;
-        }
-    });
-    return users.filter(user => ((user.score === maxi) && (user.room == room)));
+    let userInRoom = users.filter(user => user.room == room).sort((a, b) => b - a);
+
+    let message = '';
+    let len = userInRoom.length;
+
+    if(len) {
+        message += '1st : ' + userInRoom[0].username + ' (Score: ' + userInRoom[0].score + ')\n';
+        len-=1;
+    }
+    if(len) {
+        message += '2nd : ' + userInRoom[1].username + ' (Score: ' + userInRoom[1].score + ')\n';
+        len-=1;
+    }
+    if(len) {
+        message += '3rd : ' + userInRoom[2].username + ' (Score: ' + userInRoom[2].score + ')\n';
+        len-=1;
+    }
+    if(len) {
+        message += '4th : ' + userInRoom[3].username + ' (Score: ' + userInRoom[3].score + ')\n';
+        len-=1;
+    }
+    return message;
 }
 
 Array.prototype.remove = function(value) {

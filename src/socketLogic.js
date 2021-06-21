@@ -25,15 +25,30 @@ module.exports = function(socket, io) {
         socket.room = user.room;
         socket.name = user.user;
 
+        if(userLen(socket.room) > 1) {
+            socket.emit('gameState', {
+                state : trackRoom[socket.room][2]['states'],
+                board : trackRoom[socket.room][3]['board']
+            });
+
+            trackRoom[socket.room][3]['mode']==1 && trackRoom[socket.room][0]['trackWrong'].push(socket.name);
+        }
+
         // Send distinct online room
         io.sockets.emit('newRoom', {rooms : distinctRooms()});
 
         if(userLen(room) == 1) {
             trackRoom[room] = [];
             trackRoom[room][0] = {};
-            trackRoom[room][0]['trackWrong'] = [];
+            trackRoom[room][0]['trackWrong'] = [];      // Track Wrong User for question
             trackRoom[room][1] = {};
-            trackRoom[room][1]['dailyDoubles'] = [];
+            trackRoom[room][1]['dailyDoubles'] = [];    // Daily Doubles Questions (3 Questions)
+            trackRoom[room][2] = {};
+            trackRoom[room][2]['states'] = [];      // Visited Questions Tracking
+            trackRoom[room][3] = {};
+            trackRoom[room][3]['board'] = 0;    // Board Number, 0-Board1, 1-Board2, 2-Board3
+            trackRoom[room][3]['mode'] = 0;    // Mode (Current state of game - Question or Board on display) 0-Board, 1-Question
+            console.log(trackRoom)
             for(let i=0; i<3; ++i) {
                 trackRoom[room][1]['dailyDoubles'].push(pickRandomQuestion());
             }
@@ -54,7 +69,10 @@ module.exports = function(socket, io) {
 
     // Get question event
     socket.on('getQuestion', (data) => {
+        trackRoom[socket.room][3]['mode']=1;
         let obj = boards[data.x].categories[Object.keys(boards[data.x].categories)[data.y]][data.z];
+        trackRoom[socket.room][2]['states'].push([data.x, data.y, data.z]);
+        trackRoom[socket.room][3]['board'] = data.x;
         io.to(data.room).emit('question', {
             que : obj.question,
             ans : obj.answer,
@@ -86,6 +104,7 @@ module.exports = function(socket, io) {
 
         // Show dashboard
         io.to(data.room).emit('dashboard');
+        trackRoom[data.room][3]['mode']=0;
     });
 
     // Wrong answer event handler
@@ -111,11 +130,17 @@ module.exports = function(socket, io) {
 
             // Show dashboard
             io.to(data.room).emit('dashboard');
+            trackRoom[data.room][3]['mode']=0;
         } 
     });
 
     // Reset game
     socket.on('resetGame', (room) => {
+       
+        // Send Winner data
+        io.to(room).emit('gameEnd', {
+            winner : getWinner(room)    
+        });
 
         // Reset Users score data
         resetUsers(room);
@@ -136,6 +161,8 @@ module.exports = function(socket, io) {
 
         // Reset game dashboard
         io.to(room).emit('resetDashboard');
+        trackRoom[room][2]['states'].length = 0;
+        trackRoom[room][3]['mode']=0;
     });
 
     // Logout event
@@ -163,6 +190,13 @@ module.exports = function(socket, io) {
             if(idx !== -1) {
                 trackRoom[user.room][0]['trackWrong'].splice(idx, 1)[0];
             }
+
+            // If all the user except the left user are wrong then render dashboard (Edge Case)
+            if(userLen(user.room) == trackRoom[user.room][0]['trackWrong'].length) {
+                // Render game dashboard
+                io.to(user.room).emit('dashboard');
+                trackRoom[user.room][3]['mode']=0;
+            }
         }
     });
 
@@ -188,10 +222,17 @@ module.exports = function(socket, io) {
                 roomUsers: getRoomUsers(user.room)
             });
 
-            // Notify room member about left user
+            // Notify room member about left userq
             io.to(user.room).emit('userLeft', {
                 message : formatMessage(user.username)
             });
+
+            // If all the user except the left user are wrong then render dashboard (Edge Case)
+            if(userLen(user.room) == trackRoom[user.room][0]['trackWrong'].length) {
+                // Render game dashboard
+                io.to(user.room).emit('dashboard');
+                trackRoom[user.room][3]['mode']=0;
+            }
         }
     });
   
