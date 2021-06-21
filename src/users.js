@@ -42,26 +42,21 @@ function userLen(room) {
 
 function getWinner(room) {
     let userInRoom = users.filter(user => user.room == room).sort((a, b) => b - a);
-
+    let position = ['1st', '2nd', '3rd', '4th']
     let message = '';
-    let len = userInRoom.length;
+    let current_rank = 0,
+        global_rank = 0,
+        current_mark = 0
 
-    if(len) {
-        message += '1st : ' + userInRoom[0].username + ' (Score: ' + userInRoom[0].score + ')\n';
-        len-=1;
-    }
-    if(len) {
-        message += '2nd : ' + userInRoom[1].username + ' (Score: ' + userInRoom[1].score + ')\n';
-        len-=1;
-    }
-    if(len) {
-        message += '3rd : ' + userInRoom[2].username + ' (Score: ' + userInRoom[2].score + ')\n';
-        len-=1;
-    }
-    if(len) {
-        message += '4th : ' + userInRoom[3].username + ' (Score: ' + userInRoom[3].score + ')\n';
-        len-=1;
-    }
+    userInRoom.forEach(user => {
+        global_rank += 1;
+
+        if(user.score != current_mark) {
+            current_mark = user.score;
+            current_rank = global_rank
+        }
+        message += position[current_rank - 1] + ' : ' + user.username + ' (Score: ' + user.score + ')\n';
+    })
     return message;
 }
 
